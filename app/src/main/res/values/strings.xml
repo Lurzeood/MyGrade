@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyGrade</string>
+    <string name="name_hint">Please input your name here</string>
+    <string name="subject_hint">Please input your subject here</string>
+    <string name="score_hint">Please input your score here</string>
+    <string name="spinner_head">选择科目</string>
+</resources>
