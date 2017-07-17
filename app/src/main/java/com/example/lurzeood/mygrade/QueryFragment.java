@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,8 +19,12 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.lurzeood.mygrade.GradeDbSchema.GradeTable;
 
@@ -34,6 +40,7 @@ public class QueryFragment extends Fragment {
     private Button toInsert;
     private Spinner subjectSpinner;
     private TextView welcomeview;
+    private TextView showtimeview;
 
     private List<Subject> lists;
     private List<String> subjectlist;
@@ -83,6 +90,7 @@ public class QueryFragment extends Fragment {
         toInsert = (Button) view.findViewById(R.id.to_insert_fragment);
         subjectSpinner = (Spinner) view.findViewById(R.id.subject_spinner);
         welcomeview = (TextView) view.findViewById(R.id.textview_query_welcome);
+        showtimeview = (TextView) view.findViewById(R.id.textview_time_show);
 
         name = getArguments().getString("name");
 
@@ -112,6 +120,29 @@ public class QueryFragment extends Fragment {
         ArrayAdapter subjectadapter = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_dropdown_item,subjectlist);
 
 
+        final Handler timehandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                System.out.println(msg.getData().getString("time"));
+                showtimeview.setText("当前时间："+msg.getData().getString("time"));
+
+            }
+        };
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Message time = new Message();
+                long cur = System.currentTimeMillis();
+                Date date = new Date(cur);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 EEE");
+
+                Bundle bundle = new Bundle();
+                bundle.putString("time",format.format(date));
+                time.setData(bundle);
+                timehandler.sendMessage(time);
+            }
+        },0,1000);
         welcomeview.setText(name);
 
         query.setOnClickListener(new View.OnClickListener() {
@@ -191,5 +222,6 @@ public class QueryFragment extends Fragment {
         }
 
     }
+
 
 }
