@@ -25,7 +25,6 @@ public class MyGradeActivity extends AppCompatActivity
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.mygrade_activity);
-
         if (fragment == null){
             fragment = QueryFragment.newInstance(name);
             fragmentManager.beginTransaction()

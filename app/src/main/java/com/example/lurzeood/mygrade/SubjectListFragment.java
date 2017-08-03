@@ -1,5 +1,6 @@
 package com.example.lurzeood.mygrade;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -9,8 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +25,10 @@ import java.util.List;
 public class SubjectListFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private Button button_save;
+
+
+
     private List<Subject> lists;
 
     public static SubjectListFragment newInstance(List<Subject> subjectLists) {
@@ -48,7 +56,18 @@ public class SubjectListFragment extends Fragment {
 
 
         recyclerView = (RecyclerView) view.findViewById(R.id.subject_list_fragment);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        button_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
 
